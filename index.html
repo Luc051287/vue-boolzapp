@@ -66,7 +66,14 @@
             </ul>
           </div>
           <div id="chat_main">
-
+            <ul>
+              <li v-for="(message,index) in filteredMessages()" :class="(message.status == 'sent') ? 'sent_side' : 'received_side'">
+                <div class="message" :class="(message.status == 'sent') ? 'sent' : 'received'">
+                  <p>{{message.text}}</p>
+                  <p>{{message.date}}</p>
+                </div>
+              </li>
+            </ul>
           </div>
           <div id="chat_input">
 

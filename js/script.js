@@ -149,6 +149,15 @@ var app = new Vue(
         this.actualName = this.contacts[index].name;
         this.actualAvatar = this.contacts[index].avatar;
         this.actualDate = this.contacts[index].messages[this.contacts[index].messages.length - 1].date;
+      },
+      filteredMessages: function() {
+        let activeChat;
+        this.contacts.forEach((contact) => {
+          if (contact.active == true) {
+            activeChat = contact.messages;
+          }
+        });
+        return activeChat;
       }
     }
   }
