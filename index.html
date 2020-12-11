@@ -30,11 +30,12 @@
 
           </div>
           <div id="search">
-
+            <button type="button" name="button" @click="filterChat()"><i class="fas fa-search"></i></button>
+            <input type="text" name="" value="" placeholder="Cerca o inizia una nuova chat" v-model="search">
           </div>
           <div id="chat_list">
             <ul>
-              <li v-for="(contact, index) in contacts" :class="(contact.active == true) ? 'active' : ''" @click="changeActive(index)">
+              <li v-for="(contact, index) in filterContacts()" :class="(contact.active == true) ? 'active' : ''" @click="changeActive(index)">
                 <div class="avatar_circle">
                   <img class="avatar" :src="contact.avatar" alt="">
                 </div>

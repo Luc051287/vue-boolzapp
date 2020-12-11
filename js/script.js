@@ -2,9 +2,7 @@ var app = new Vue(
   {
     el:"#root",
     data: {
-      // actualAvatar: "",
-      // actualName: "",
-      // actualDate: "",
+      search: "",
       contacts: [
 	{
 		name: 'Michele',
@@ -158,6 +156,11 @@ var app = new Vue(
           }
         });
         return activeChat;
+      },
+      filterContacts: function() {
+        return this.contacts.filter((contact) => {
+          return contact.name.includes(this.search); 
+        });
       }
     }
   }
