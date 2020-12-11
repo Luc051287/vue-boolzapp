@@ -72,6 +72,7 @@ ul.icons > li > i {
 
 p#self {
   font-weight: bold;
+  width: calc(100% - 200px);
 }
 
 .actual_chat_details {
