@@ -2,12 +2,16 @@ var app = new Vue(
   {
     el:"#root",
     data: {
+      // actualAvatar: "",
+      // actualName: "",
+      // actualDate: "",
       contacts: [
 	{
 		name: 'Michele',
-		avatar: '_1',
+		avatar: 'img/michele.png',
     // ATT a questa proprietà e ricordarsi di gestire la data
 		visible: true,
+    active: true,
 		messages: [
 			{
 				date: '10/01/2020 15:30:55',
@@ -28,8 +32,9 @@ var app = new Vue(
 	},
 	{
 		name: 'Fabio',
-		avatar: '_2',
+		avatar: 'img/fabio.png',
 		visible: true,
+    active: false,
 		messages: [
 			{
 				date: '20/03/2020 16:30:00',
@@ -50,8 +55,9 @@ var app = new Vue(
 	},
 	{
 		name: 'Samuele',
-		avatar: '_3',
+		avatar: 'img/samuele.png',
 		visible: true,
+    active: false,
 		messages: [
 			{
 				date: '28/03/2020 10:10:40',
@@ -72,8 +78,9 @@ var app = new Vue(
 	},
 	{
 		name: 'Luisa',
-		avatar: '_4',
+		avatar: 'img/luisa.png',
 		visible: true,
+    active: false,
 		messages: [
 			{
 				date: '10/01/2020 15:30:55',
@@ -89,8 +96,66 @@ var app = new Vue(
 	},
 ]
     },
-    methods: {
+    // da rivedere il set
+    computed: {
+      actualAvatar: {
+        get: function() {
+          let actualAvatar = "";
+          this.contacts.forEach((contact, index) => {
+            if (contact.active == true) {
+              actualAvatar = contact.avatar;
+            }
+          });
+          return actualAvatar;
+        },
+        set: function(newValue) {
+          newValue = this.actualAvatar;
+        }
+      },
+      actualName: {
+        get: function() {
+          let actualName = "";
+          this.contacts.forEach((contact, index) => {
+            if (contact.active == true) {
+              actualName = contact.name;
+            }
+          });
+          return actualName
+        },
+        set: function(newValue) {
+          newValue = this.actualName;
+        }
+      },
 
+      actualDate: {
+        get: function() {
+          let actualDate = "";
+          this.contacts.forEach((contact, index) => {
+            if (contact.active == true) {
+              actualDate = contact.messages[contact.messages.length - 1].date;
+            }
+          });
+          return actualDate;
+        },
+        set: function(newValue) {
+          newValue = this.actualDate;
+        }
+      }
+    },
+    methods: {
+      changeActive: function(index) {
+        let actualIndex = 0;
+        this.contacts.forEach((contact, index) => {
+          if (contact.active == true) {
+            actualIndex = index;
+          }
+        });
+        this.contacts[actualIndex].active = false;
+        this.contacts[index].active = true;
+        this.actualName = this.contacts[index].name;
+        this.actualAvatar = this.contacts[index].avatar;
+        this.actualDate = this.contacts[index].messages[this.contacts[index].messages.length - 1].date;
+      }
     }
   }
 )

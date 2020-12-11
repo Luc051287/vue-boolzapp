@@ -34,9 +34,9 @@
           </div>
           <div id="chat_list">
             <ul>
-              <li v-for="(contact, index) in contacts">
+              <li v-for="(contact, index) in contacts" :class="(contact.active == true) ? 'active' : ''" @click="changeActive(index)">
                 <div class="avatar_circle">
-                  <img class="avatar" src="img/self.png" alt="">
+                  <img class="avatar" :src="contact.avatar" alt="">
                 </div>
                 <div id="chat_details">
                   <p>{{contact.name}}</p>
@@ -52,9 +52,13 @@
         <div class="right main">
           <div class="header">
             <div class="avatar_circle">
-              <img class="avatar" src="img/self.png" alt="">
+              <img class="avatar" :src="actualAvatar" alt="">
             </div>
-            <p id="self">Nome Utente</p>
+            <div class="actual_chat_details" >
+              <p id="self">{{actualName}}</p>
+              <p>Ultimo accesso alle {{actualDate}}</p>
+            </div>
+
             <ul class="icons">
               <li><i class="fas fa-search"></i></li>
               <li><i class="fas fa-paperclip"></i></li>

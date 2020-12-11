@@ -71,9 +71,11 @@ ul.icons > li > i {
 }
 
 p#self {
-  width: calc(100% - 200px);
-  margin-left: 5px;
   font-weight: bold;
+}
+
+.actual_chat_details {
+  width: calc(100% - 200px);
 }
 
 ul.icons > li {
@@ -146,6 +148,7 @@ ul.icons > li {
 
 #chat_list .avatar_circle {
   background-color: rgb(240,240,240);
+  overflow: scroll;
 }
 
 #chat_main {
@@ -156,4 +159,8 @@ ul.icons > li {
 #chat_input {
   height: 70px;
   background-color: rgb(241,235,231);
+}
+
+.active {
+  background-color: rgb(230,232,232);
 }
