@@ -133,6 +133,9 @@ ul.icons > li {
   font-size: 12px;
   color: rgb(201,186,185);
   font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #date_last_message > p {
