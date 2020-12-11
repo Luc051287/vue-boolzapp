@@ -66,7 +66,7 @@ ul.icons {
 }
 
 ul.icons > li > i {
-  font-size: 25px;
+  font-size: 20px;
   color: rgb(168,168,168);
 }
 
@@ -101,6 +101,48 @@ ul.icons > li {
 #chat_list {
   height: calc(100% - 190px);
   background-color: white;
+}
+
+#chat_list > ul {
+  list-style: none;
+}
+
+#chat_list li {
+  border-top: 1px solid lightgray;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+#chat_details, #date_last_message {
+  height: 100%;
+  padding-top: 10px;
+}
+
+#chat_details > p:first-child {
+  font-size: 18px;
+}
+
+#chat_details {
+  width: calc(100% - 200px);
+}
+
+#chat_details > p:last-child {
+  font-size: 12px;
+  color: lightgray;
+  font-weight: bold;
+}
+
+#date_last_message > p {
+  font-size: 12px;
+  color: lightgray;
+  font-weight: bold;
+}
+
+#chat_list .avatar_circle {
+  background-color: lightgray;
 }
 
 #chat_main {

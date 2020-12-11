@@ -8,6 +8,8 @@
     <title>BOOLZAPP</title>
   </head>
   <body>
+    <div id="root">
+
 
     <div class="container">
 
@@ -23,7 +25,6 @@
               <li><i class="fas fa-comment-alt"></i></li>
               <li><i class="fas fa-ellipsis-v"></i></li>
             </ul>
-
           </div>
           <div id="notification">
 
@@ -32,12 +33,33 @@
 
           </div>
           <div id="chat_list">
-
+            <ul>
+              <li v-for="(contact, index) in contacts">
+                <div class="avatar_circle">
+                  <img class="avatar" src="img/self.png" alt="">
+                </div>
+                <div id="chat_details">
+                  <p>{{contact.name}}</p>
+                  <p>{{contact.messages[contact.messages.length - 1].text}}</p>
+                </div>
+                <div id="date_last_message">
+                  <p>{{contact.messages[contact.messages.length - 1].date}}</p>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="right main">
           <div class="header">
-
+            <div class="avatar_circle">
+              <img class="avatar" src="img/self.png" alt="">
+            </div>
+            <p id="self">Nome Utente</p>
+            <ul class="icons">
+              <li><i class="fas fa-search"></i></li>
+              <li><i class="fas fa-paperclip"></i></li>
+              <li><i class="fas fa-ellipsis-v"></i></li>
+            </ul>
           </div>
           <div id="chat_main">
 
@@ -50,7 +72,7 @@
       </div>
 
     </div>
-
+    </div>
     <script src="js/script.js" charset="utf-8"></script>
   </body>
 </html>
