@@ -108,9 +108,7 @@ var app = new Vue(
           });
           return actualAvatar;
         },
-        set: function(newValue) {
-          newValue = this.actualAvatar;
-        }
+        set: function() {}
       },
       actualName: {
         get: function() {
@@ -122,9 +120,7 @@ var app = new Vue(
           });
           return actualName
         },
-        set: function(newValue) {
-          newValue = this.actualName;
-        }
+        set: function() {}
       },
 
       actualDate: {
@@ -137,9 +133,7 @@ var app = new Vue(
           });
           return actualDate;
         },
-        set: function(newValue) {
-          newValue = this.actualDate;
-        }
+        set: function() {}
       }
     },
     methods: {
