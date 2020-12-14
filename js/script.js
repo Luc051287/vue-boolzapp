@@ -97,10 +97,6 @@ var app = new Vue(
     },
     // da rivedere il set
     computed: {
-      formattedDate: function() {
-        let date = new Date();
-        return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-      },
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
@@ -141,6 +137,12 @@ var app = new Vue(
       }
     },
     methods: {
+      formattedDate: function() {
+        let date = new Date();
+        let minutes = (date.getMinutes().toString().length == 1) ? "0" + date.getMinutes() : date.getMinutes();
+        let seconds = (date.getSeconds().toString().length == 1) ? "0" + date.getSeconds() : date.getSeconds();
+        return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " " + date.getHours() + ":" + minutes + ":" + seconds
+      },
       changeActive: function(index) {
         let actualIndex = 0;
         this.contacts.forEach((contact, index) => {
@@ -178,17 +180,26 @@ var app = new Vue(
         let newMessage = new Object();
         newMessage.text = this.toSend;
         newMessage.status = 'sent';
-        newMessage.date = this.formattedDate;
+        newMessage.date = this.formattedDate();
         this.contacts[actualIndex].messages.push(newMessage);
         this.toSend = "";
+        this.scrollDown();
         setTimeout(() => {
           let response = new Object();
           response.text = "Ok!";
           response.status = 'received';
-          response.date = this.formattedDate;
+          response.date = this.formattedDate();
           this.contacts[actualIndex].messages.push(response);
+          this.scrollDown();
         }, 1000);
+      },
+      scrollDown: function() {
+        // Aspetto che il DOM si aggiorna
+        this.$nextTick(function () {
+          let myDiv = document.getElementById("chat_main");
+          myDiv.scrollTop = myDiv.scrollHeight;
+        })
       }
     }
   }
-)
+);

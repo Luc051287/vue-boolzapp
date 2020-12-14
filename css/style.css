@@ -128,6 +128,7 @@ ul.icons > li {
 #chat_list {
   height: calc(100% - 190px);
   background-color: white;
+  overflow: scroll;
 }
 
 #chat_list > ul {
@@ -173,7 +174,6 @@ ul.icons > li {
 
 #chat_list .avatar_circle {
   background-color: rgb(240,240,240);
-  overflow: scroll;
 }
 
 #chat_main {
@@ -184,6 +184,7 @@ ul.icons > li {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  overflow: auto;
 }
 
 #chat_input {
