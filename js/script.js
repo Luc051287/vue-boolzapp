@@ -130,7 +130,7 @@ var app = new Vue(
         get: function() {
           let actualDate = "";
           this.contacts.forEach((contact) => {
-            let indexLastReceived = contact.messages.map(item => item.status).indexOf('received');
+            let indexLastReceived = contact.messages.map(item => item.status).lastIndexOf('received');
             if (contact.active == true) {
               actualDate = contact.messages[indexLastReceived].date;
             }
@@ -169,7 +169,6 @@ var app = new Vue(
         });
       },
       send: function() {
-
         let actualIndex = 0;
         this.contacts.forEach((contact, index) => {
           if (contact.active == true) {
@@ -182,6 +181,13 @@ var app = new Vue(
         newMessage.date = this.formattedDate;
         this.contacts[actualIndex].messages.push(newMessage);
         this.toSend = "";
+        setTimeout(() => {
+          let response = new Object();
+          response.text = "Ok!";
+          response.status = 'received';
+          response.date = this.formattedDate;
+          this.contacts[actualIndex].messages.push(response);
+        }, 1000);
       }
     }
   }
