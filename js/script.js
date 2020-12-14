@@ -125,12 +125,13 @@ var app = new Vue(
       actualDate: {
         get: function() {
           let actualDate = "";
-          this.contacts.forEach((contact, index) => {
+          this.contacts.forEach((contact) => {
+            let indexLastReceived = contact.messages.map(item => item.status).indexOf('received');
             if (contact.active == true) {
-              actualDate = contact.messages[contact.messages.length - 1].date;
+              actualDate = contact.messages[indexLastReceived].date;
             }
           });
-          return actualDate;
+          return actualDate
         },
         set: function() {}
       }
@@ -158,21 +159,13 @@ var app = new Vue(
         });
         return activeChat;
       },
-      // messagesList: function() {
-      //   let allMessages = [];
-      //   for (contact of this.contacts) {
-      //     for (message of contact.messages) {
-      //       allMessages.push(message.text);
-      //     }
-      //   }
-      //   return allMessages;
-      // },
       filterContacts: function() {
         return this.contacts.filter((contact) => {
           return contact.name.toLowerCase().includes(this.search.trim());
         });
       },
       send: function() {
+        console.log()
         let actualIndex = 0;
         this.contacts.forEach((contact, index) => {
           if (contact.active == true) {
