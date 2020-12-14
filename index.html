@@ -41,10 +41,12 @@
                 </div>
                 <div id="chat_details">
                   <p>{{contact.name}}</p>
-                  <p>{{contact.messages[contact.messages.length - 1].text}}</p>
+                  <p v-if="contact.messages.length != 0">{{contact.messages[contact.messages.length - 1].text}}</p>
+                  <p v-else></p>
                 </div>
                 <div id="date_last_message">
-                  <p>{{contact.messages[contact.messages.length - 1].date}}</p>
+                  <p v-if="contact.messages.length != 0">{{contact.messages[contact.messages.length - 1].date}}</p>
+                  <p v-else></p>
                 </div>
               </li>
             </ul>

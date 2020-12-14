@@ -2,6 +2,7 @@ var app = new Vue(
   {
     el:"#root",
     data: {
+      lastSavedDate: "",
       menuIndex: 0,
       toSend: "",
       search: "",
@@ -134,8 +135,12 @@ var app = new Vue(
           let actualDate = "";
           this.contacts.forEach((contact) => {
             let indexLastReceived = contact.messages.map(item => item.status).lastIndexOf('received');
-            if (contact.active == true) {
+            if (contact.active == true && indexLastReceived != -1) {
+              console.log(indexLastReceived)
               actualDate = contact.messages[indexLastReceived].date;
+              this.lastSavedDate = actualDate;
+            } else {
+              actualDate = this.lastSavedDate;
             }
           });
           return (actualDate == this.formattedDate()) ? "oggi " + actualDate : "il " + actualDate
