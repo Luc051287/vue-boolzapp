@@ -2,6 +2,7 @@ var app = new Vue(
   {
     el:"#root",
     data: {
+      toSend: "",
       search: "",
       contacts: [
 	{
@@ -157,10 +158,33 @@ var app = new Vue(
         });
         return activeChat;
       },
+      // messagesList: function() {
+      //   let allMessages = [];
+      //   for (contact of this.contacts) {
+      //     for (message of contact.messages) {
+      //       allMessages.push(message.text);
+      //     }
+      //   }
+      //   return allMessages;
+      // },
       filterContacts: function() {
         return this.contacts.filter((contact) => {
-          return contact.name.includes(this.search); 
+          return contact.name.toLowerCase().includes(this.search.trim());
         });
+      },
+      send: function() {
+        let actualIndex = 0;
+        this.contacts.forEach((contact, index) => {
+          if (contact.active == true) {
+            actualIndex = index;
+          }
+        });
+        let newMessage = new Object();
+        newMessage.text = this.toSend;
+        newMessage.status = 'sent';
+        newMessage.date = '10/01/2020 15:30:55';
+        this.contacts[actualIndex].messages.push(newMessage);
+        this.toSend = "";
       }
     }
   }

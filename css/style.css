@@ -7,15 +7,14 @@
 .container {
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(rgb(0,139,125) 20%, rgb(215,214,204) 0%);
+  background-image: linear-gradient(to bottom, rgb(0,139,125) 20%, rgb(215,214,204) 0%);
   display: flex;
 }
 
 .box {
-  /*poi cambiarlo mettendo un padding al container*/
-  width: 1400px;
-  height: 900px;
-  /* background-color: red; */
+  /*poi cambiarlo mettendo un padding al container o delle percentuali*/
+  width: 85%;
+  height: 90%;
   margin: auto;
   display: flex;
 }
@@ -28,13 +27,11 @@
 .left {
   width: 30%;
   height: 100%;
-  background-color: red;
 }
 
 .right {
   width: 70%;
   height: 100%;
-  background-color: yellow;
 }
 
 .header {
@@ -92,12 +89,12 @@ ul.icons > li {
 }
 
 #notification {
-  height: 80px;
+  height: 70px;
   background-color: rgb(130,213,252);
 }
 
 #search {
-  height: 40px;
+  height: 50px;
   background-color: rgb(249,249,249);
   padding: 2px;
   display: flex;
@@ -107,7 +104,7 @@ ul.icons > li {
 
 #search > button {
   width: 50px;
-  height: 30px;
+  height: 40px;
   border-width: 1px 0 1px 1px;
   border-style: solid;
   border-color: lightgray;
@@ -117,9 +114,10 @@ ul.icons > li {
 
 #search > input {
   width: calc(100% - 60px);
-  height: 30px;
+  height: 40px;
   outline: none;
   padding-left: 5px;
+  font-size: 15px;
 }
 
 #search > button > i {
@@ -191,6 +189,29 @@ ul.icons > li {
 #chat_input {
   height: 70px;
   background-color: rgb(241,235,231);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#chat_input > input {
+  width: calc(100% - 150px);
+  height: 45px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  font-size: 15px;
+}
+
+#chat_input > i {
+  height: 100%;
+  line-height: 70px;
+  width: 70px;
+  text-align: center;
+  color: rgb(168,168,168);
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .active {
@@ -236,6 +257,7 @@ li.received_side {
   font-size: 14px;
   /*vedere se si riesce a mettere il trattino che separa parola*/
   word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .message > p:last-child {
