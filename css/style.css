@@ -257,7 +257,7 @@ li.received_side {
   font-size: 14px;
   /*vedere se si riesce a mettere il trattino che separa parola*/
   word-wrap: break-word;
-  overflow-wrap: break-word;
+  /* overflow-wrap: break-word; */
 }
 
 .message > p:last-child {

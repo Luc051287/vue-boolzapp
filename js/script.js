@@ -97,6 +97,10 @@ var app = new Vue(
     },
     // da rivedere il set
     computed: {
+      formattedDate: function() {
+        let date = new Date();
+        return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+      },
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
@@ -165,7 +169,7 @@ var app = new Vue(
         });
       },
       send: function() {
-        console.log()
+
         let actualIndex = 0;
         this.contacts.forEach((contact, index) => {
           if (contact.active == true) {
@@ -175,7 +179,7 @@ var app = new Vue(
         let newMessage = new Object();
         newMessage.text = this.toSend;
         newMessage.status = 'sent';
-        newMessage.date = '10/01/2020 15:30:55';
+        newMessage.date = this.formattedDate;
         this.contacts[actualIndex].messages.push(newMessage);
         this.toSend = "";
       }
