@@ -2,6 +2,7 @@ var app = new Vue(
   {
     el:"#root",
     data: {
+      noActives: false,
       lastSavedDate: "",
       menuIndex: 0,
       toSend: "",
@@ -10,7 +11,7 @@ var app = new Vue(
 	{
 		name: 'Michele',
 		avatar: 'img/michele.png',
-    active: true,
+    active: false,
 		messages: [
 			{
 				date: '10/01/2020 15:30:55',
@@ -156,6 +157,7 @@ var app = new Vue(
         return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " " + date.getHours() + ":" + minutes + ":" + seconds
       },
       changeActive: function(index) {
+        this.noActives = true;
         let actualIndex = 0;
         this.contacts.forEach((contact, index) => {
           if (contact.active == true) {
@@ -211,7 +213,7 @@ var app = new Vue(
         }, 1000);
       },
       scrollDown: function() {
-        // Aspetto che il DOM si aggiorna
+        // Aspetto che il DOM sia completamente caricato
         this.$nextTick(function () {
           let myDiv = document.getElementById("chat_main");
           myDiv.scrollTop = myDiv.scrollHeight;

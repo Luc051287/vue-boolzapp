@@ -9,10 +9,7 @@
   </head>
   <body>
     <div id="root">
-
-
     <div class="container" @click="hideAllMenu(this.app.filteredMessages())">
-
       <div class="box">
         <div class="left main">
           <div class="header">
@@ -28,6 +25,13 @@
           </div>
           <div id="notification">
 
+            <div class="avatar_circle">
+              <i class="fas fa-bell-slash"></i>
+            </div>
+            <div id="notification_infos">
+              <p>Ricevi notifiche di nuovi messaggi</p>
+              <p><a href="#">Attiva notifiche desktop</a></p>
+            </div>
           </div>
           <div id="search">
             <button type="button" name="button" @click=""><i class="fas fa-search"></i></button>
@@ -52,7 +56,10 @@
             </ul>
           </div>
         </div>
-        <div class="right main">
+        <div v-if="noActives == false">
+          <img id="initial" src="img/initial.png" alt="">
+        </div>
+        <div v-else class="right main">
           <div class="header">
             <div class="avatar_circle">
               <img class="avatar" :src="actualAvatar" alt="">
@@ -61,7 +68,6 @@
               <p id="self">{{actualName}}</p>
               <p>Ultimo accesso {{actualDate}}</p>
             </div>
-
             <ul class="icons">
               <li><i class="fas fa-search"></i></li>
               <li><i class="fas fa-paperclip"></i></li>
@@ -92,10 +98,8 @@
             <input type="text" name="" value="" placeholder="Scrivi un messaggio" @keyup.enter="send()" v-model="toSend">
             <i class="fas fa-microphone"></i>
           </div>
-
         </div>
       </div>
-
     </div>
     </div>
     <script src="js/script.js" charset="utf-8"></script>
