@@ -269,6 +269,10 @@ ul.icons > li {
   margin: 10px;
 }
 
+#delete_menu li:last-child {
+  cursor: pointer;
+}
+
 #chat_main li .message:hover .down_arrow > i {
   visibility: visible;
 }

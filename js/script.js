@@ -190,6 +190,7 @@ var app = new Vue(
         let newMessage = new Object();
         newMessage.text = this.toSend;
         newMessage.status = 'sent';
+        newMessage.isHideMenu = false;
         newMessage.date = this.formattedDate();
         this.contacts[actualIndex].messages.push(newMessage);
         this.toSend = "";
@@ -198,6 +199,7 @@ var app = new Vue(
           let response = new Object();
           response.text = "Ok!";
           response.status = 'received';
+          response.isHideMenu = false;
           response.date = this.formattedDate();
           this.contacts[actualIndex].messages.push(response);
           this.scrollDown();
@@ -219,6 +221,10 @@ var app = new Vue(
             message.isHideMenu = false;
           });
         }
+      },
+      deleteMess: function(array, index) {
+        // array.splice(index, 1);
+        Vue.delete(array, index);
       }
     }
   }

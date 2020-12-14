@@ -73,11 +73,11 @@
                   <p>{{message.text}}</p>
                   <p>{{message.date}}</p>
                   <div class="down_arrow">
-                    <i class="fas fa-chevron-down value" title="message_menu" @click="showMenu(filteredMessages(), index)"></i>
+                    <i class="fas fa-chevron-down" title="message_menu" @click="showMenu(filteredMessages(), index)"></i>
                     <div id="delete_menu" :class="(message.isHideMenu == false) ? 'hide' : 'show'">
                       <ul>
                         <li><p>Message info</p></li>
-                        <li><p>Cancella messaggio</p></li>
+                        <li @click="deleteMess(filteredMessages(), index)"><p>Cancella messaggio</p></li>
                       </ul>
                     </div>
                   </div>
