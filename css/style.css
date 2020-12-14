@@ -229,6 +229,50 @@ ul.icons > li {
   margin-top: 10px;
 }
 
+.down_arrow {
+  position: absolute;
+  bottom: 30px;
+  left: 90%;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inline-block;
+}
+
+.down_arrow i {
+  color: lightgray;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+#delete_menu {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  right: 0;
+  top: 30px;
+  z-index: 3;
+  box-shadow: 0px 0px 5px 1px lightgray;
+}
+
+#delete_menu > ul {
+  width: 200px;
+  padding: 5px;
+}
+
+#delete_menu li {
+  display: block;
+  margin: 10px;
+}
+
+#chat_main li .message:hover .down_arrow > i {
+  visibility: visible;
+}
+
 li.sent_side {
   justify-content: flex-end;
 }
@@ -242,6 +286,7 @@ li.received_side {
   width: 300px;
   padding: 5px 10px;
   box-shadow: 0px 0px 5px 1px lightgray;
+  position: relative;
 }
 
 .sent {
@@ -261,7 +306,7 @@ li.received_side {
   /* overflow-wrap: break-word; */
 }
 
-.message > p:last-child {
+.message > p:nth-child(2) {
   text-align: right;
   font-size: 10px;
   color: lightgray;

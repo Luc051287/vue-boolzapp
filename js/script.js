@@ -2,6 +2,7 @@ var app = new Vue(
   {
     el:"#root",
     data: {
+      menuIndex: 0,
       toSend: "",
       search: "",
       contacts: [
@@ -13,17 +14,20 @@ var app = new Vue(
 			{
 				date: '10/01/2020 15:30:55',
 				text: 'Hai portato a spasso il cane?',
-				status: 'sent'
+				status: 'sent',
+        isHideMenu: false
 			},
 			{
 				date: '10/01/2020 15:50:00',
 				text: 'Ricordati di dargli da mangiare',
-				status: 'sent'
+				status: 'sent',
+        isHideMenu: false
 			},
 			{
 				date: '10/01/2020 16:15:22',
 				text: 'Tutto fatto!',
-				status: 'received'
+				status: 'received',
+        isHideMenu: false
 			}
 		],
 	},
@@ -35,17 +39,20 @@ var app = new Vue(
 			{
 				date: '20/03/2020 16:30:00',
 				text: 'Ciao come stai?',
-				status: 'sent'
+				status: 'sent',
+        isHideMenu: false
 			},
 			{
 				date: '20/03/2020 16:30:55',
 				text: 'Bene grazie! Stasera ci vediamo?',
-				status: 'received'
+				status: 'received',
+        isHideMenu: false
 			},
 			{
 				date: '20/03/2020 16:35:00',
 				text: 'Mi piacerebbe ma devo andare a fare la spesa.',
-				status: 'sent'
+				status: 'sent',
+        isHideMenu: false
 			}
 		],
 	},
@@ -57,17 +64,20 @@ var app = new Vue(
 			{
 				date: '28/03/2020 10:10:40',
 				text: 'La Marianna va in campagna',
-				status: 'received'
+				status: 'received',
+        isHideMenu: false
 			},
 			{
 				date: '28/03/2020 10:20:10',
 				text: 'Sicuro di non aver sbagliato chat?',
-				status: 'sent'
+				status: 'sent',
+        isHideMenu: false
 			},
 			{
 				date: '28/03/2020 16:15:22',
 				text: 'Ah scusa!',
-				status: 'received'
+				status: 'received',
+        isHideMenu: false
 			}
 		],
 	},
@@ -79,12 +89,14 @@ var app = new Vue(
 			{
 				date: '10/01/2020 15:30:55',
 				text: 'Lo sai che ha aperto una nuova pizzeria?',
-				status: 'sent'
+				status: 'sent',
+        isHideMenu: false
 			},
 			{
 				date: '10/01/2020 15:50:00',
 				text: 'Si, ma preferirei andare al cinema',
-				status: 'received'
+				status: 'received',
+        isHideMenu: false
 			}
 		],
 	},
@@ -126,7 +138,7 @@ var app = new Vue(
               actualDate = contact.messages[indexLastReceived].date;
             }
           });
-          return actualDate
+          return (actualDate == this.formattedDate()) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
       }
@@ -166,6 +178,9 @@ var app = new Vue(
         });
       },
       send: function() {
+        if (this.toSend == "") {
+          return
+        }
         let actualIndex = 0;
         this.contacts.forEach((contact, index) => {
           if (contact.active == true) {
@@ -194,6 +209,16 @@ var app = new Vue(
           let myDiv = document.getElementById("chat_main");
           myDiv.scrollTop = myDiv.scrollHeight;
         })
+      },
+      showMenu: function(array, index) {
+        array[index].isHideMenu = !array[index].isHideMenu;
+      },
+      hideAllMenu: function(array) {
+        if(event.target.title != "message_menu") {
+          array.forEach((message) => {
+            message.isHideMenu = false;
+          });
+        }
       }
     }
   }

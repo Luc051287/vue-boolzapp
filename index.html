@@ -11,7 +11,7 @@
     <div id="root">
 
 
-    <div class="container">
+    <div class="container" @click="hideAllMenu(this.app.filteredMessages())">
 
       <div class="box">
         <div class="left main">
@@ -57,7 +57,7 @@
             </div>
             <div class="actual_chat_details" >
               <p id="self">{{actualName}}</p>
-              <p>Ultimo accesso alle {{actualDate}}</p>
+              <p>Ultimo accesso {{actualDate}}</p>
             </div>
 
             <ul class="icons">
@@ -72,6 +72,15 @@
                 <div class="message" :class="(message.status == 'sent') ? 'sent' : 'received'">
                   <p>{{message.text}}</p>
                   <p>{{message.date}}</p>
+                  <div class="down_arrow">
+                    <i class="fas fa-chevron-down value" title="message_menu" @click="showMenu(filteredMessages(), index)"></i>
+                    <div id="delete_menu" :class="(message.isHideMenu == false) ? 'hide' : 'show'">
+                      <ul>
+                        <li><p>Message info</p></li>
+                        <li><p>Cancella messaggio</p></li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
             </ul>
