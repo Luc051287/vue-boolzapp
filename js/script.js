@@ -8,8 +8,6 @@ var app = new Vue(
 	{
 		name: 'Michele',
 		avatar: 'img/michele.png',
-    // ATT a questa proprietà e ricordarsi di gestire la data
-		visible: true,
     active: true,
 		messages: [
 			{
@@ -32,7 +30,6 @@ var app = new Vue(
 	{
 		name: 'Fabio',
 		avatar: 'img/fabio.png',
-		visible: true,
     active: false,
 		messages: [
 			{
@@ -55,7 +52,6 @@ var app = new Vue(
 	{
 		name: 'Samuele',
 		avatar: 'img/samuele.png',
-		visible: true,
     active: false,
 		messages: [
 			{
@@ -78,7 +74,6 @@ var app = new Vue(
 	{
 		name: 'Luisa',
 		avatar: 'img/luisa.png',
-		visible: true,
     active: false,
 		messages: [
 			{
