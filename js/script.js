@@ -108,7 +108,7 @@ var app = new Vue(
     computed: {
       actualIndex: function() {
         let actualIndex = 0;
-        this.contacts.forEach((contact, index) => {
+        this.filterContacts.forEach((contact, index) => {
           if (contact.active == true) {
             actualIndex = index;
           }
@@ -118,7 +118,7 @@ var app = new Vue(
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
-          actualAvatar = this.contacts[this.actualIndex].avatar;
+          actualAvatar = this.filterContacts[this.actualIndex].avatar;
           return actualAvatar;
         },
         set: function() {}
@@ -126,7 +126,7 @@ var app = new Vue(
       actualName: {
         get: function() {
           let actualName = "";
-          actualName = this.contacts[this.actualIndex].name;
+          actualName = this.filterContacts[this.actualIndex].name;
           return actualName
         },
         set: function() {}
@@ -135,7 +135,7 @@ var app = new Vue(
       actualDate: {
         get: function() {
           let actualDate = "";
-          this.contacts.forEach((contact) => {
+          this.filterContacts.forEach((contact) => {
             let indexLastReceived = contact.messages.map(item => item.status).lastIndexOf('received');
             if (contact.active == true && indexLastReceived != -1) {
               actualDate = contact.messages[indexLastReceived].date;
@@ -147,6 +147,11 @@ var app = new Vue(
           return (actualDate == this.formattedDate()) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
+      },
+      filterContacts: function() {
+        return this.contacts.filter((contact) => {
+          return contact.name.toLowerCase().includes(this.search.trim());
+        });
       }
     },
     methods: {
@@ -157,23 +162,25 @@ var app = new Vue(
         return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " " + date.getHours() + ":" + minutes + ":" + seconds
       },
       changeActive: function(index) {
-        this.noActives = true;
-        this.contacts[this.actualIndex].active = false;
-        this.contacts[index].active = true;
-        this.actualName = this.contacts[index].name;
-        this.actualAvatar = this.contacts[index].avatar;
-        this.actualDate = this.contacts[index].messages[this.contacts[index].messages.length - 1].date;
+        if (this.noActives == false) {
+          this.noActives = true;
+        }
+        this.filterContacts[this.actualIndex].active = false;
+        this.filterContacts[index].active = true;
+        this.actualName = this.filterContacts[index].name;
+        this.actualAvatar = this.filterContacts[index].avatar;
+        this.actualDate = this.filterContacts[index].messages[this.filterContacts[index].messages.length - 1].date;
       },
       filteredMessages: function() {
         let activeChat;
-        activeChat = this.contacts[this.actualIndex].messages;
+        activeChat = this.filterContacts[this.actualIndex].messages;
         return activeChat;
       },
-      filterContacts: function() {
-        return this.contacts.filter((contact) => {
-          return contact.name.toLowerCase().includes(this.search.trim());
-        });
-      },
+      // filterContacts: function() {
+      //   return this.contacts.filter((contact) => {
+      //     return contact.name.toLowerCase().includes(this.search.trim());
+      //   });
+      // },
       send: function() {
         if (this.toSend == "") {
           return
@@ -183,7 +190,7 @@ var app = new Vue(
         newMessage.status = 'sent';
         newMessage.isHideMenu = false;
         newMessage.date = this.formattedDate();
-        this.contacts[this.actualIndex].messages.push(newMessage);
+        this.filterContacts[this.actualIndex].messages.push(newMessage);
         this.toSend = "";
         this.scrollDown();
         this.isWriting = true;
@@ -193,7 +200,7 @@ var app = new Vue(
           response.status = 'received';
           response.isHideMenu = false;
           response.date = this.formattedDate();
-          this.contacts[this.actualIndex].messages.push(response);
+          this.filterContacts[this.actualIndex].messages.push(response);
           this.scrollDown();
           this.isWriting = false;
         }, 2000);

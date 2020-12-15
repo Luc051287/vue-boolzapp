@@ -43,7 +43,7 @@
           </div>
           <div id="chat_list">
             <ul>
-              <li v-for="(contact, index) in filterContacts()" :class="(contact.active == true) ? 'active' : ''" @click="changeActive(index)">
+              <li v-for="(contact, index) in filterContacts" :class="(contact.active == true) ? 'active' : ''" @click="changeActive(index)">
                 <div class="avatar_circle">
                   <img class="avatar" :src="contact.avatar" alt="">
                 </div>
