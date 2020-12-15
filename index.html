@@ -35,7 +35,10 @@
             </div>
           </div>
           <div id="search">
-            <button type="button" name="button" @click=""><i class="fas fa-search"></i></button>
+            <button type="button" name="button" @click="">
+              <i class="fas fa-search" v-if="search == ''"></i>
+              <i class="fas fa-arrow-left" v-else @click="search = ''"></i>
+            </button>
             <input type="text" name="" value="" placeholder="Cerca o inizia una nuova chat" v-model="search">
           </div>
           <div id="chat_list">

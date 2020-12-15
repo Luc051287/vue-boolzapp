@@ -153,9 +153,14 @@ ul.icons > li {
   border: 1px solid lightgray;
 }
 
-#search > button > i {
+#search > button > i.fa-search {
   font-size: 15px;
   color: rgb(168,168,168);
+}
+
+#search > button > i.fa-arrow-left {
+  font-size: 20px;
+  color: rgb(130,213,252);
 }
 
 #chat_list {
