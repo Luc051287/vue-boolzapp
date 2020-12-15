@@ -4,6 +4,7 @@ var app = new Vue(
     data: {
       noActives: false,
       lastSavedDate: "",
+      lastSavedBefore: "",
       isWriting: false,
       menuIndex: 0,
       toSend: "",
@@ -15,19 +16,19 @@ var app = new Vue(
           active: false,
 		      messages: [
 			      {
-				      date: '10/01/2020 15:30:55',
+				      date: '01/10/2020 15:30:55',
 				      text: 'Hai portato a spasso il cane?',
 				      status: 'sent',
               isHideMenu: false
 			      },
 			      {
-				      date: '10/01/2020 15:50:00',
+				      date: '01/10/2020 15:50:00',
 				      text: 'Ricordati di dargli da mangiare',
 				      status: 'sent',
               isHideMenu: false
 			      },
 			      {
-				      date: '10/01/2020 16:15:22',
+				      date: '01/10/2020 16:15:22',
 				      text: 'Tutto fatto!',
 				      status: 'received',
               isHideMenu: false
@@ -40,19 +41,19 @@ var app = new Vue(
           active: false,
 		      messages: [
 			      {
-				      date: '20/03/2020 16:30:00',
+				      date: '03/20/2020 16:30:00',
 				      text: 'Ciao come stai?',
 				      status: 'sent',
               isHideMenu: false
 			      },
 			      {
-				      date: '20/03/2020 16:30:55',
+				      date: '03/20/2020 16:30:55',
 				      text: 'Bene grazie! Stasera ci vediamo?',
 				      status: 'received',
               isHideMenu: false
 			      },
 			      {
-				      date: '20/03/2020 16:35:00',
+				      date: '03/20/2020 16:35:00',
 				      text: 'Mi piacerebbe ma devo andare a fare la spesa.',
 				      status: 'sent',
               isHideMenu: false
@@ -65,19 +66,19 @@ var app = new Vue(
           active: false,
 		      messages: [
 			      {
-				      date: '28/03/2020 10:10:40',
+				      date: '03/28/2020 10:10:40',
 				      text: 'La Marianna va in campagna',
 				      status: 'received',
               isHideMenu: false
 			      },
 			      {
-				      date: '28/03/2020 10:20:10',
+				      date: '03/28/2020 10:20:10',
 				      text: 'Sicuro di non aver sbagliato chat?',
 				      status: 'sent',
               isHideMenu: false
 			      },
 			      {
-				      date: '28/03/2020 16:15:22',
+				      date: '03/28/2020 16:15:22',
 				      text: 'Ah scusa!',
 				      status: 'received',
               isHideMenu: false
@@ -90,13 +91,13 @@ var app = new Vue(
           active: false,
 		      messages: [
 			      {
-				      date: '10/01/2020 15:30:55',
+				      date: '01/10/2020 15:30:55',
 				      text: 'Lo sai che ha aperto una nuova pizzeria?',
 				      status: 'sent',
               isHideMenu: false
 			      },
 			      {
-				      date: '10/01/2020 15:50:00',
+				      date: '01/10/2020 15:50:00',
 				      text: 'Si, ma preferirei andare al cinema',
 				      status: 'received',
               isHideMenu: false
@@ -135,15 +136,22 @@ var app = new Vue(
       actualDate: {
         get: function() {
           let actualDate = "";
-          this.filterContacts.forEach((contact) => {
-            let indexLastReceived = contact.messages.map(item => item.status).lastIndexOf('received');
-            if (contact.active == true && indexLastReceived != -1) {
-              actualDate = contact.messages[indexLastReceived].date;
-              this.lastSavedDate = actualDate;
+          let convertedDate = "";
+          let indexLastReceived = this.contacts[this.actualIndex].messages.map(item => item.status).lastIndexOf('received');
+          if (indexLastReceived != -1) {
+            if (new Date(this.lastSavedBefore).getTime() > new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date).getTime()) {
+              convertedDate = new Date(this.lastSavedBefore);
+              actualDate = convertedDate.toLocaleString();
             } else {
-              actualDate = this.lastSavedDate;
+              convertedDate = new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date);
+              actualDate = convertedDate.toLocaleString();
+              this.lastSavedDate = actualDate;
             }
-          });
+          } else {
+            actualDate = this.lastSavedDate;
+          }
+          console.log(actualDate.substr(0,10))
+          console.log(this.formattedDate().substr(0,10))
           return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
@@ -162,9 +170,13 @@ var app = new Vue(
     methods: {
       formattedDate: function() {
         let date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth()+1;
+        let year = date.getFullYear();
+        let hours = date.getHours();
         let minutes = (date.getMinutes().toString().length == 1) ? "0" + date.getMinutes() : date.getMinutes();
         let seconds = (date.getSeconds().toString().length == 1) ? "0" + date.getSeconds() : date.getSeconds();
-        return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " " + date.getHours() + ":" + minutes + ":" + seconds
+        return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`
       },
       changeActive: function(index) {
         if (this.noActives == false) {
@@ -224,7 +236,8 @@ var app = new Vue(
         }
       },
       deleteMess: function(array, index) {
-        // array.splice(index, 1);
+        this.lastSavedBefore = array[array.map(item => item.status).lastIndexOf('received')].date;
+        console.log(new Date(this.lastSavedBefore))
         this.$delete(array, index);
       }
     }
