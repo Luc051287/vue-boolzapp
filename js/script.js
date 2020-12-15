@@ -8,7 +8,6 @@ var app = new Vue(
       menuIndex: 0,
       toSend: "",
       search: "",
-      // chat_main: "#chat_main",
       contacts: [
 	      {
 		      name: 'Michele',
@@ -107,14 +106,19 @@ var app = new Vue(
       ]
     },
     computed: {
+      actualIndex: function() {
+        let actualIndex = 0;
+        this.contacts.forEach((contact, index) => {
+          if (contact.active == true) {
+            actualIndex = index;
+          }
+        });
+        return actualIndex
+      },
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
-          this.contacts.forEach((contact, index) => {
-            if (contact.active == true) {
-              actualAvatar = contact.avatar;
-            }
-          });
+          actualAvatar = this.contacts[this.actualIndex].avatar;
           return actualAvatar;
         },
         set: function() {}
@@ -122,11 +126,7 @@ var app = new Vue(
       actualName: {
         get: function() {
           let actualName = "";
-          this.contacts.forEach((contact, index) => {
-            if (contact.active == true) {
-              actualName = contact.name;
-            }
-          });
+          actualName = this.contacts[this.actualIndex].name;
           return actualName
         },
         set: function() {}
@@ -138,7 +138,6 @@ var app = new Vue(
           this.contacts.forEach((contact) => {
             let indexLastReceived = contact.messages.map(item => item.status).lastIndexOf('received');
             if (contact.active == true && indexLastReceived != -1) {
-              console.log(indexLastReceived)
               actualDate = contact.messages[indexLastReceived].date;
               this.lastSavedDate = actualDate;
             } else {
@@ -159,13 +158,7 @@ var app = new Vue(
       },
       changeActive: function(index) {
         this.noActives = true;
-        let actualIndex = 0;
-        this.contacts.forEach((contact, index) => {
-          if (contact.active == true) {
-            actualIndex = index;
-          }
-        });
-        this.contacts[actualIndex].active = false;
+        this.contacts[this.actualIndex].active = false;
         this.contacts[index].active = true;
         this.actualName = this.contacts[index].name;
         this.actualAvatar = this.contacts[index].avatar;
@@ -173,11 +166,7 @@ var app = new Vue(
       },
       filteredMessages: function() {
         let activeChat;
-        this.contacts.forEach((contact) => {
-          if (contact.active == true) {
-            activeChat = contact.messages;
-          }
-        });
+        activeChat = this.contacts[this.actualIndex].messages;
         return activeChat;
       },
       filterContacts: function() {
@@ -189,18 +178,12 @@ var app = new Vue(
         if (this.toSend == "") {
           return
         }
-        let actualIndex = 0;
-        this.contacts.forEach((contact, index) => {
-          if (contact.active == true) {
-            actualIndex = index;
-          }
-        });
         let newMessage = new Object();
         newMessage.text = this.toSend;
         newMessage.status = 'sent';
         newMessage.isHideMenu = false;
         newMessage.date = this.formattedDate();
-        this.contacts[actualIndex].messages.push(newMessage);
+        this.contacts[this.actualIndex].messages.push(newMessage);
         this.toSend = "";
         this.scrollDown();
         this.isWriting = true;
@@ -210,7 +193,7 @@ var app = new Vue(
           response.status = 'received';
           response.isHideMenu = false;
           response.date = this.formattedDate();
-          this.contacts[actualIndex].messages.push(response);
+          this.contacts[this.actualIndex].messages.push(response);
           this.scrollDown();
           this.isWriting = false;
         }, 2000);
