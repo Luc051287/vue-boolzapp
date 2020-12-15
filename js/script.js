@@ -109,17 +109,23 @@ var app = new Vue(
     computed: {
       actualIndex: function() {
         let actualIndex = 0;
-        this.filterContacts.forEach((contact, index) => {
-          if (contact.active == true) {
-            actualIndex = index;
-          }
-        });
+        if (this.filterContacts.length != 0) {
+          this.filterContacts.forEach((contact, index) => {
+            if (contact.active == true) {
+              actualIndex = index;
+            }
+          });
+        } else {
+          actualIndex = -1;
+        }
         return actualIndex
       },
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
-          actualAvatar = this.filterContacts[this.actualIndex].avatar;
+          if (this.actualIndex != -1) {
+            actualAvatar = this.filterContacts[this.actualIndex].avatar;
+          }
           return actualAvatar;
         },
         set: function() {}
@@ -127,7 +133,9 @@ var app = new Vue(
       actualName: {
         get: function() {
           let actualName = "";
-          actualName = this.filterContacts[this.actualIndex].name;
+          if (this.actualIndex != -1) {
+            actualName = this.filterContacts[this.actualIndex].name;
+          }
           return actualName
         },
         set: function() {}
@@ -137,6 +145,9 @@ var app = new Vue(
         get: function() {
           let actualDate = "";
           let convertedDate = "";
+          if (this.actualIndex != -1) {
+
+
           let indexLastReceived = this.contacts[this.actualIndex].messages.map(item => item.status).lastIndexOf('received');
           if (indexLastReceived != -1) {
             if (new Date(this.lastSavedBefore).getTime() > new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date).getTime()) {
@@ -153,6 +164,7 @@ var app = new Vue(
           console.log(actualDate.substr(0,10))
           console.log(this.formattedDate().substr(0,10))
           return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
+        }
         },
         set: function() {}
       },
@@ -163,7 +175,9 @@ var app = new Vue(
       },
       filteredMessages: function() {
         let activeChat;
-        activeChat = this.filterContacts[this.actualIndex].messages;
+        if (this.actualIndex != -1) {
+          activeChat = this.filterContacts[this.actualIndex].messages;
+        }
         return activeChat;
       }
     },
