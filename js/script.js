@@ -4,9 +4,11 @@ var app = new Vue(
     data: {
       noActives: false,
       lastSavedDate: "",
+      isWriting: false,
       menuIndex: 0,
       toSend: "",
       search: "",
+      // chat_main: "#chat_main",
       contacts: [
 	      {
 		      name: 'Michele',
@@ -201,6 +203,7 @@ var app = new Vue(
         this.contacts[actualIndex].messages.push(newMessage);
         this.toSend = "";
         this.scrollDown();
+        this.isWriting = true;
         setTimeout(() => {
           let response = new Object();
           response.text = "Ok!";
@@ -209,11 +212,13 @@ var app = new Vue(
           response.date = this.formattedDate();
           this.contacts[actualIndex].messages.push(response);
           this.scrollDown();
-        }, 1000);
+          this.isWriting = false;
+        }, 2000);
       },
       scrollDown: function() {
         // Aspetto che il DOM sia completamente caricato
         this.$nextTick(function () {
+          // chiedere per manipolazione DOM?
           let myDiv = document.getElementById("chat_main");
           myDiv.scrollTop = myDiv.scrollHeight;
         })
@@ -235,7 +240,7 @@ var app = new Vue(
       },
       deleteMess: function(array, index) {
         // array.splice(index, 1);
-        Vue.delete(array, index);
+        this.$delete(array, index);
       }
     }
   }

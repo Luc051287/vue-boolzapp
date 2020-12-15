@@ -67,7 +67,8 @@
             </div>
             <div class="actual_chat_details" >
               <p id="self">{{actualName}}</p>
-              <p>Ultimo accesso {{actualDate}}</p>
+              <p v-if="isWriting == false">Ultimo accesso {{actualDate}}</p>
+              <p v-else>Sta scrivendo...</p>
             </div>
             <ul class="icons">
               <li><i class="fas fa-search"></i></li>
