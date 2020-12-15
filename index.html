@@ -11,7 +11,7 @@
   </head>
   <body>
     <div id="root">
-    <div class="container" @click="hideAllMenu(this.app.filteredMessages())">
+    <div class="container" @click="hideAllMenu(this.app.filteredMessages)">
       <div class="box">
         <div class="left main">
           <div class="header">
@@ -81,16 +81,16 @@
           </div>
           <div id="chat_main">
             <ul>
-              <li v-for="(message,index) in filteredMessages()" :class="(message.status == 'sent') ? 'sent_side' : 'received_side'">
+              <li v-for="(message,index) in filteredMessages" :class="(message.status == 'sent') ? 'sent_side' : 'received_side'">
                 <div class="message" :class="(message.status == 'sent') ? 'sent' : 'received'">
                   <p>{{message.text}}</p>
                   <p>{{message.date}}</p>
                   <div class="down_arrow">
-                    <i class="fas fa-chevron-down" title="message_menu" @click="showMenu(filteredMessages(), index)"></i>
+                    <i class="fas fa-chevron-down" title="message_menu" @click="showMenu(filteredMessages, index)"></i>
                     <div id="delete_menu" :class="[(message.isHideMenu == false) ? 'hide' : 'show', (message.status == 'received') ? 'left_menu' : 'right_menu']">
                       <ul>
                         <li><p>Message info</p></li>
-                        <li @click="deleteMess(filteredMessages(), index)"><p>Cancella messaggio</p></li>
+                        <li @click="deleteMess(filteredMessages, index)"><p>Cancella messaggio</p></li>
                       </ul>
                     </div>
                   </div>

@@ -144,7 +144,7 @@ var app = new Vue(
               actualDate = this.lastSavedDate;
             }
           });
-          return (actualDate == this.formattedDate()) ? "oggi " + actualDate : "il " + actualDate
+          return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
       },
@@ -152,6 +152,11 @@ var app = new Vue(
         return this.contacts.filter((contact) => {
           return contact.name.toLowerCase().includes(this.search.trim());
         });
+      },
+      filteredMessages: function() {
+        let activeChat;
+        activeChat = this.filterContacts[this.actualIndex].messages;
+        return activeChat;
       }
     },
     methods: {
@@ -171,16 +176,6 @@ var app = new Vue(
         this.actualAvatar = this.filterContacts[index].avatar;
         this.actualDate = this.filterContacts[index].messages[this.filterContacts[index].messages.length - 1].date;
       },
-      filteredMessages: function() {
-        let activeChat;
-        activeChat = this.filterContacts[this.actualIndex].messages;
-        return activeChat;
-      },
-      // filterContacts: function() {
-      //   return this.contacts.filter((contact) => {
-      //     return contact.name.toLowerCase().includes(this.search.trim());
-      //   });
-      // },
       send: function() {
         if (this.toSend == "") {
           return
