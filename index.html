@@ -2,6 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.css" integrity="sha512-f73UKwzP1Oia45eqHpHwzJtFLpvULbhVpEJfaWczo/ZCV5NWSnK4vLDnjTaMps28ocZ05RbI83k2RlQH92zy7A==" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -16,7 +18,7 @@
             <div class="avatar_circle">
               <img class="avatar" src="img/self.png" alt="">
             </div>
-            <p id="self">Nome Utente</p>
+            <p id="self">Luca Gentili</p>
             <ul class="icons">
               <li><i class="fas fa-circle-notch"></i></li>
               <li><i class="fas fa-comment-alt"></i></li>
@@ -81,7 +83,7 @@
                   <p>{{message.date}}</p>
                   <div class="down_arrow">
                     <i class="fas fa-chevron-down" title="message_menu" @click="showMenu(filteredMessages(), index)"></i>
-                    <div id="delete_menu" :class="(message.isHideMenu == false) ? 'hide' : 'show'">
+                    <div id="delete_menu" :class="[(message.isHideMenu == false) ? 'hide' : 'show', (message.status == 'received') ? 'left_menu' : 'right_menu']">
                       <ul>
                         <li><p>Message info</p></li>
                         <li @click="deleteMess(filteredMessages(), index)"><p>Cancella messaggio</p></li>

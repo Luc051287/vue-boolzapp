@@ -8,103 +8,102 @@ var app = new Vue(
       toSend: "",
       search: "",
       contacts: [
-	{
-		name: 'Michele',
-		avatar: 'img/michele.png',
-    active: false,
-		messages: [
-			{
-				date: '10/01/2020 15:30:55',
-				text: 'Hai portato a spasso il cane?',
-				status: 'sent',
-        isHideMenu: false
-			},
-			{
-				date: '10/01/2020 15:50:00',
-				text: 'Ricordati di dargli da mangiare',
-				status: 'sent',
-        isHideMenu: false
-			},
-			{
-				date: '10/01/2020 16:15:22',
-				text: 'Tutto fatto!',
-				status: 'received',
-        isHideMenu: false
-			}
-		],
-	},
-	{
-		name: 'Fabio',
-		avatar: 'img/fabio.png',
-    active: false,
-		messages: [
-			{
-				date: '20/03/2020 16:30:00',
-				text: 'Ciao come stai?',
-				status: 'sent',
-        isHideMenu: false
-			},
-			{
-				date: '20/03/2020 16:30:55',
-				text: 'Bene grazie! Stasera ci vediamo?',
-				status: 'received',
-        isHideMenu: false
-			},
-			{
-				date: '20/03/2020 16:35:00',
-				text: 'Mi piacerebbe ma devo andare a fare la spesa.',
-				status: 'sent',
-        isHideMenu: false
-			}
-		],
-	},
-	{
-		name: 'Samuele',
-		avatar: 'img/samuele.png',
-    active: false,
-		messages: [
-			{
-				date: '28/03/2020 10:10:40',
-				text: 'La Marianna va in campagna',
-				status: 'received',
-        isHideMenu: false
-			},
-			{
-				date: '28/03/2020 10:20:10',
-				text: 'Sicuro di non aver sbagliato chat?',
-				status: 'sent',
-        isHideMenu: false
-			},
-			{
-				date: '28/03/2020 16:15:22',
-				text: 'Ah scusa!',
-				status: 'received',
-        isHideMenu: false
-			}
-		],
-	},
-	{
-		name: 'Luisa',
-		avatar: 'img/luisa.png',
-    active: false,
-		messages: [
-			{
-				date: '10/01/2020 15:30:55',
-				text: 'Lo sai che ha aperto una nuova pizzeria?',
-				status: 'sent',
-        isHideMenu: false
-			},
-			{
-				date: '10/01/2020 15:50:00',
-				text: 'Si, ma preferirei andare al cinema',
-				status: 'received',
-        isHideMenu: false
-			}
-		],
-	},
-]
+	      {
+		      name: 'Michele',
+          avatar: 'img/michele.png',
+          active: false,
+		      messages: [
+			      {
+				      date: '10/01/2020 15:30:55',
+				      text: 'Hai portato a spasso il cane?',
+				      status: 'sent',
+              isHideMenu: false
+			      },
+			      {
+				      date: '10/01/2020 15:50:00',
+				      text: 'Ricordati di dargli da mangiare',
+				      status: 'sent',
+              isHideMenu: false
+			      },
+			      {
+				      date: '10/01/2020 16:15:22',
+				      text: 'Tutto fatto!',
+				      status: 'received',
+              isHideMenu: false
+			      }
+		      ],
+	      },
+	      {
+		      name: 'Fabio',
+		      avatar: 'img/fabio.png',
+          active: false,
+		      messages: [
+			      {
+				      date: '20/03/2020 16:30:00',
+				      text: 'Ciao come stai?',
+				      status: 'sent',
+              isHideMenu: false
+			      },
+			      {
+				      date: '20/03/2020 16:30:55',
+				      text: 'Bene grazie! Stasera ci vediamo?',
+				      status: 'received',
+              isHideMenu: false
+			      },
+			      {
+				      date: '20/03/2020 16:35:00',
+				      text: 'Mi piacerebbe ma devo andare a fare la spesa.',
+				      status: 'sent',
+              isHideMenu: false
+			      }
+		      ],
+	      },
+	      {
+		      name: 'Samuele',
+		      avatar: 'img/samuele.png',
+          active: false,
+		      messages: [
+			      {
+				      date: '28/03/2020 10:10:40',
+				      text: 'La Marianna va in campagna',
+				      status: 'received',
+              isHideMenu: false
+			      },
+			      {
+				      date: '28/03/2020 10:20:10',
+				      text: 'Sicuro di non aver sbagliato chat?',
+				      status: 'sent',
+              isHideMenu: false
+			      },
+			      {
+				      date: '28/03/2020 16:15:22',
+				      text: 'Ah scusa!',
+				      status: 'received',
+              isHideMenu: false
+			      }
+		      ],
+	      },
+	      {
+		      name: 'Luisa',
+		      avatar: 'img/luisa.png',
+          active: false,
+		      messages: [
+			      {
+				      date: '10/01/2020 15:30:55',
+				      text: 'Lo sai che ha aperto una nuova pizzeria?',
+				      status: 'sent',
+              isHideMenu: false
+			      },
+			      {
+				      date: '10/01/2020 15:50:00',
+				      text: 'Si, ma preferirei andare al cinema',
+				      status: 'received',
+              isHideMenu: false
+			      }
+		      ],
+	      },
+      ]
     },
-    // da rivedere il set
     computed: {
       actualAvatar: {
         get: function() {
@@ -220,6 +219,11 @@ var app = new Vue(
         })
       },
       showMenu: function(array, index) {
+        array.forEach((message, newIndex) => {
+          if (index != newIndex) {
+            message.isHideMenu = false;
+          }
+        });
         array[index].isHideMenu = !array[index].isHideMenu;
       },
       hideAllMenu: function(array) {
