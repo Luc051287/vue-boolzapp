@@ -134,7 +134,6 @@ var app = new Vue(
       actualDate: {
         get: function() {
           let actualDate = "";
-          let dateUsFormat = "";
           this.contacts.forEach((elem) => {
             if (elem.active == true) {
               let indexLastReceived = elem.messages.map(item => item.status).lastIndexOf('received');
@@ -142,10 +141,8 @@ var app = new Vue(
               if (indexLastReceived != -1) {
                 const newDate = dayjs(elem.messages[indexLastReceived].date);
                 if (lastDate.isAfter(newDate)) {
-                  dateUsFormat = lastDate.format('MM/DD/YYYY HH:mm:ss');
                   actualDate = lastDate.format('DD/MM/YYYY HH:mm:ss');
                 } else {
-                  dateUsFormat = newDate.format('MM/DD/YYYY HH:mm:ss');
                   actualDate = newDate.format('DD/MM/YYYY HH:mm:ss');
                   this.lastSavedDate = actualDate;
                 }
@@ -154,7 +151,7 @@ var app = new Vue(
               }
             }
           })
-          return (dateUsFormat.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
+          return (actualDate.substr(0,10) == this.dateEuFormat(this.formattedDate()).substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
       },
