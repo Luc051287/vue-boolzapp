@@ -174,6 +174,10 @@ var app = new Vue(
       }
     },
     methods: {
+      dateEuFormat: function(date) {
+        let dateNew = dayjs(date);
+        return dateNew.format('DD/MM/YYYY HH:mm:ss')
+      },
       formattedDate: function() {
         const date = dayjs();
         return date.format('MM/DD/YYYY HH:mm:ss')

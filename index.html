@@ -54,7 +54,8 @@
                   <p v-else></p>
                 </div>
                 <div id="date_last_message">
-                  <p v-if="contact.messages.length != 0">{{contact.messages[contact.messages.length - 1].date}}</p>
+                  <p v-if="contact.messages.length != 0">{{dateEuFormat
+                    (contact.messages[contact.messages.length - 1].date)}}</p>
                   <p v-else></p>
                 </div>
               </li>
@@ -85,7 +86,7 @@
               <li v-for="(message,index) in filteredMessages" :class="(message.status == 'sent') ? 'sent_side' : 'received_side'">
                 <div class="message" :class="(message.status == 'sent') ? 'sent' : 'received'">
                   <p>{{message.text}}</p>
-                  <p>{{message.date}}</p>
+                  <p>{{dateEuFormat(message.date)}}</p>
                   <div class="down_arrow">
                     <i class="fas fa-chevron-down" title="message_menu" @click="showMenu(filteredMessages, index)"></i>
                     <div id="delete_menu" :class="[(message.isHideMenu == false) ? 'hide' : 'show', (message.status == 'received') ? 'left_menu' : 'right_menu']">
