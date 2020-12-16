@@ -202,13 +202,15 @@ var app = new Vue(
         if (this.noActives == false) {
           this.noActives = true;
         }
+        this.contacts[index].active = true;
         this.contacts.forEach((elem) => {
           if (elem.active == true) {
             elem.active = false;
           }
         })
-        this.contacts[index].active = true;
-        this.filterContacts[this.actualIndex].active = false;
+        this.filterContacts.forEach((elem) => {
+          elem.active = false
+        })
         this.filterContacts[index].active = true;
         this.actualName = this.filterContacts[index].name;
         this.actualAvatar = this.filterContacts[index].avatar;
