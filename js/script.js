@@ -107,19 +107,6 @@ var app = new Vue(
       ]
     },
     computed: {
-      // actualIndex: function() {
-      //   let actualIndex = 0;
-      //   if (this.filterContacts.length != 0) {
-      //     this.filterContacts.forEach((contact, index) => {
-      //       if (contact.active == true) {
-      //         actualIndex = index;
-      //       }
-      //     });
-      //   } else {
-      //     actualIndex = -1;
-      //   }
-      //   return actualIndex
-      // },
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
@@ -164,27 +151,9 @@ var app = new Vue(
               } else {
                 actualDate = this.lastSavedDate;
               }
-              console.log(actualDate.substr(0,10))
-              console.log(this.formattedDate().substr(0,10))
-              return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
             }
           })
-          // let indexLastReceived = this.contacts[this.actualIndex].messages.map(item => item.status).lastIndexOf('received');
-          // if (indexLastReceived != -1) {
-          //   if (new Date(this.lastSavedBefore).getTime() > new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date).getTime()) {
-          //     convertedDate = new Date(this.lastSavedBefore);
-          //     actualDate = convertedDate.toLocaleString();
-          //   } else {
-          //     convertedDate = new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date);
-          //     actualDate = convertedDate.toLocaleString();
-          //     this.lastSavedDate = actualDate;
-          //   }
-          // } else {
-          //   actualDate = this.lastSavedDate;
-          // }
-          // console.log(actualDate.substr(0,10))
-          // console.log(this.formattedDate().substr(0,10))
-          // return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
+          return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
       },
@@ -237,7 +206,11 @@ var app = new Vue(
         newMessage.status = 'sent';
         newMessage.isHideMenu = false;
         newMessage.date = this.formattedDate();
-        this.filterContacts[this.actualIndex].messages.push(newMessage);
+        this.filterContacts.forEach((elem) => {
+          if (elem.active == true) {
+            elem.messages.push(newMessage);
+          }
+        })
         this.toSend = "";
         this.scrollDown();
         this.isWriting = true;
@@ -247,7 +220,11 @@ var app = new Vue(
           response.status = 'received';
           response.isHideMenu = false;
           response.date = this.formattedDate();
-          this.filterContacts[this.actualIndex].messages.push(response);
+          this.filterContacts.forEach((elem) => {
+            if (elem.active == true) {
+              elem.messages.push(response);
+            }
+          })
           this.scrollDown();
           this.isWriting = false;
         }, 2000);
@@ -276,8 +253,9 @@ var app = new Vue(
         }
       },
       deleteMess: function(array, index) {
-        this.lastSavedBefore = array[array.map(item => item.status).lastIndexOf('received')].date;
-        console.log(new Date(this.lastSavedBefore))
+        if (array.map(item => item.status).lastIndexOf('received') != -1) {
+          this.lastSavedBefore = array[array.map(item => item.status).lastIndexOf('received')].date;
+        }
         this.$delete(array, index);
       }
     }
