@@ -72,13 +72,13 @@ var app = new Vue(
               isHideMenu: false
 			      },
 			      {
-				      date: '03/28/2020 10:20:10',
+				      date: '03/28/2020 10:10:40',
 				      text: 'Sicuro di non aver sbagliato chat?',
 				      status: 'sent',
               isHideMenu: false
 			      },
 			      {
-				      date: '03/28/2020 16:15:22',
+				      date: '03/28/2020 10:10:40',
 				      text: 'Ah scusa!',
 				      status: 'received',
               isHideMenu: false
@@ -131,21 +131,22 @@ var app = new Vue(
         },
         set: function() {}
       },
-
       actualDate: {
         get: function() {
           let actualDate = "";
-          let convertedDate = "";
+          let dateUsFormat = "";
           this.contacts.forEach((elem) => {
             if (elem.active == true) {
               let indexLastReceived = elem.messages.map(item => item.status).lastIndexOf('received');
+              const lastDate = dayjs(this.lastSavedBefore);
               if (indexLastReceived != -1) {
-                if (new Date(this.lastSavedBefore).getTime() > new Date(elem.messages[indexLastReceived].date).getTime()) {
-                  convertedDate = new Date(this.lastSavedBefore);
-                  actualDate = convertedDate.toLocaleString();
+                const newDate = dayjs(elem.messages[indexLastReceived].date);
+                if (lastDate.isAfter(newDate)) {
+                  dateUsFormat = lastDate.format('MM/DD/YYYY HH:mm:ss');
+                  actualDate = lastDate.format('DD/MM/YYYY HH:mm:ss');
                 } else {
-                  convertedDate = new Date(elem.messages[indexLastReceived].date);
-                  actualDate = convertedDate.toLocaleString();
+                  dateUsFormat = newDate.format('MM/DD/YYYY HH:mm:ss');
+                  actualDate = newDate.format('DD/MM/YYYY HH:mm:ss');
                   this.lastSavedDate = actualDate;
                 }
               } else {
@@ -153,7 +154,7 @@ var app = new Vue(
               }
             }
           })
-          return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
+          return (dateUsFormat.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
       },
@@ -174,14 +175,8 @@ var app = new Vue(
     },
     methods: {
       formattedDate: function() {
-        let date = new Date();
-        let day = date.getDate();
-        let month = date.getMonth()+1;
-        let year = date.getFullYear();
-        let hours = date.getHours();
-        let minutes = (date.getMinutes().toString().length == 1) ? "0" + date.getMinutes() : date.getMinutes();
-        let seconds = (date.getSeconds().toString().length == 1) ? "0" + date.getSeconds() : date.getSeconds();
-        return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`
+        const date = dayjs();
+        return date.format('MM/DD/YYYY HH:mm:ss')
       },
       changeActive: function(index) {
         if (this.noActives == false) {
