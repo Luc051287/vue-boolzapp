@@ -107,29 +107,27 @@ var app = new Vue(
       ]
     },
     computed: {
-      actualIndex: function() {
-        let actualIndex = 0;
-        if (this.filterContacts.length != 0) {
-          this.filterContacts.forEach((contact, index) => {
-            if (contact.active == true) {
-              actualIndex = index;
-            }
-          });
-        } else {
-          actualIndex = -1;
-        }
-        return actualIndex
-      },
+      // actualIndex: function() {
+      //   let actualIndex = 0;
+      //   if (this.filterContacts.length != 0) {
+      //     this.filterContacts.forEach((contact, index) => {
+      //       if (contact.active == true) {
+      //         actualIndex = index;
+      //       }
+      //     });
+      //   } else {
+      //     actualIndex = -1;
+      //   }
+      //   return actualIndex
+      // },
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
-          if (this.actualIndex != -1) {
             this.contacts.forEach((elem) => {
               if (elem.active == true) {
                 actualAvatar = elem.avatar;
               }
             })
-          }
           return actualAvatar;
         },
         set: function() {}
@@ -137,13 +135,11 @@ var app = new Vue(
       actualName: {
         get: function() {
           let actualName = "";
-          if (this.actualIndex != -1) {
             this.contacts.forEach((elem) => {
               if (elem.active == true) {
                 actualName = elem.name;
               }
             })
-          }
           return actualName
         },
         set: function() {}
@@ -153,22 +149,42 @@ var app = new Vue(
         get: function() {
           let actualDate = "";
           let convertedDate = "";
-          let indexLastReceived = this.contacts[this.actualIndex].messages.map(item => item.status).lastIndexOf('received');
-          if (indexLastReceived != -1) {
-            if (new Date(this.lastSavedBefore).getTime() > new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date).getTime()) {
-              convertedDate = new Date(this.lastSavedBefore);
-              actualDate = convertedDate.toLocaleString();
-            } else {
-              convertedDate = new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date);
-              actualDate = convertedDate.toLocaleString();
-              this.lastSavedDate = actualDate;
+          this.contacts.forEach((elem) => {
+            if (elem.active == true) {
+              let indexLastReceived = elem.messages.map(item => item.status).lastIndexOf('received');
+              if (indexLastReceived != -1) {
+                if (new Date(this.lastSavedBefore).getTime() > new Date(elem.messages[indexLastReceived].date).getTime()) {
+                  convertedDate = new Date(this.lastSavedBefore);
+                  actualDate = convertedDate.toLocaleString();
+                } else {
+                  convertedDate = new Date(elem.messages[indexLastReceived].date);
+                  actualDate = convertedDate.toLocaleString();
+                  this.lastSavedDate = actualDate;
+                }
+              } else {
+                actualDate = this.lastSavedDate;
+              }
+              console.log(actualDate.substr(0,10))
+              console.log(this.formattedDate().substr(0,10))
+              return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
             }
-          } else {
-            actualDate = this.lastSavedDate;
-          }
-          console.log(actualDate.substr(0,10))
-          console.log(this.formattedDate().substr(0,10))
-          return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
+          })
+          // let indexLastReceived = this.contacts[this.actualIndex].messages.map(item => item.status).lastIndexOf('received');
+          // if (indexLastReceived != -1) {
+          //   if (new Date(this.lastSavedBefore).getTime() > new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date).getTime()) {
+          //     convertedDate = new Date(this.lastSavedBefore);
+          //     actualDate = convertedDate.toLocaleString();
+          //   } else {
+          //     convertedDate = new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date);
+          //     actualDate = convertedDate.toLocaleString();
+          //     this.lastSavedDate = actualDate;
+          //   }
+          // } else {
+          //   actualDate = this.lastSavedDate;
+          // }
+          // console.log(actualDate.substr(0,10))
+          // console.log(this.formattedDate().substr(0,10))
+          // return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
         },
         set: function() {}
       },
@@ -202,14 +218,10 @@ var app = new Vue(
         if (this.noActives == false) {
           this.noActives = true;
         }
-        this.contacts[index].active = true;
         this.contacts.forEach((elem) => {
           if (elem.active == true) {
             elem.active = false;
           }
-        })
-        this.filterContacts.forEach((elem) => {
-          elem.active = false
         })
         this.filterContacts[index].active = true;
         this.actualName = this.filterContacts[index].name;
