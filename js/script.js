@@ -124,7 +124,11 @@ var app = new Vue(
         get: function() {
           let actualAvatar = "";
           if (this.actualIndex != -1) {
-            actualAvatar = this.filterContacts[this.actualIndex].avatar;
+            this.contacts.forEach((elem) => {
+              if (elem.active == true) {
+                actualAvatar = elem.avatar;
+              }
+            })
           }
           return actualAvatar;
         },
@@ -134,7 +138,11 @@ var app = new Vue(
         get: function() {
           let actualName = "";
           if (this.actualIndex != -1) {
-            actualName = this.filterContacts[this.actualIndex].name;
+            this.contacts.forEach((elem) => {
+              if (elem.active == true) {
+                actualName = elem.name;
+              }
+            })
           }
           return actualName
         },
@@ -145,9 +153,6 @@ var app = new Vue(
         get: function() {
           let actualDate = "";
           let convertedDate = "";
-          if (this.actualIndex != -1) {
-
-
           let indexLastReceived = this.contacts[this.actualIndex].messages.map(item => item.status).lastIndexOf('received');
           if (indexLastReceived != -1) {
             if (new Date(this.lastSavedBefore).getTime() > new Date(this.contacts[this.actualIndex].messages[indexLastReceived].date).getTime()) {
@@ -164,7 +169,6 @@ var app = new Vue(
           console.log(actualDate.substr(0,10))
           console.log(this.formattedDate().substr(0,10))
           return (actualDate.substr(0,10) == this.formattedDate().substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
-        }
         },
         set: function() {}
       },
@@ -175,9 +179,11 @@ var app = new Vue(
       },
       filteredMessages: function() {
         let activeChat;
-        if (this.actualIndex != -1) {
-          activeChat = this.filterContacts[this.actualIndex].messages;
-        }
+        this.contacts.forEach((elem) => {
+          if (elem.active == true) {
+            activeChat = elem.messages;
+          }
+        })
         return activeChat;
       }
     },
@@ -196,6 +202,12 @@ var app = new Vue(
         if (this.noActives == false) {
           this.noActives = true;
         }
+        this.contacts.forEach((elem) => {
+          if (elem.active == true) {
+            elem.active = false;
+          }
+        })
+        this.contacts[index].active = true;
         this.filterContacts[this.actualIndex].active = false;
         this.filterContacts[index].active = true;
         this.actualName = this.filterContacts[index].name;
