@@ -110,11 +110,9 @@ var app = new Vue(
       actualAvatar: {
         get: function() {
           let actualAvatar = "";
-            this.contacts.forEach((elem) => {
-              if (elem.active == true) {
-                actualAvatar = elem.avatar;
-              }
-            })
+          this.contacts.myFunction(function(elem) {
+            actualAvatar = elem.avatar;
+          })
           return actualAvatar;
         },
         set: function() {}
@@ -122,11 +120,9 @@ var app = new Vue(
       actualName: {
         get: function() {
           let actualName = "";
-            this.contacts.forEach((elem) => {
-              if (elem.active == true) {
-                actualName = elem.name;
-              }
-            })
+          this.contacts.myFunction(function(elem) {
+            actualName = elem.name;
+          })
           return actualName
         },
         set: function() {}
@@ -134,21 +130,19 @@ var app = new Vue(
       actualDate: {
         get: function() {
           let actualDate = "";
-          this.contacts.forEach((elem) => {
-            if (elem.active == true) {
-              let indexLastReceived = elem.messages.map(item => item.status).lastIndexOf('received');
-              const lastDate = dayjs(this.lastSavedBefore);
-              if (indexLastReceived != -1) {
-                const newDate = dayjs(elem.messages[indexLastReceived].date);
-                if (lastDate.isAfter(newDate)) {
-                  actualDate = lastDate.format('DD/MM/YYYY HH:mm:ss');
-                } else {
-                  actualDate = newDate.format('DD/MM/YYYY HH:mm:ss');
-                  this.lastSavedDate = actualDate;
-                }
+          this.contacts.myFunction((elem) => {
+            let indexLastReceived = elem.messages.map(item => item.status).lastIndexOf('received');
+            const lastDate = dayjs(this.lastSavedBefore);
+            if (indexLastReceived != -1) {
+              const newDate = dayjs(elem.messages[indexLastReceived].date);
+              if (lastDate.isAfter(newDate)) {
+                actualDate = lastDate.format('DD/MM/YYYY HH:mm:ss');
               } else {
-                actualDate = this.lastSavedDate;
+                actualDate = newDate.format('DD/MM/YYYY HH:mm:ss');
+                this.lastSavedDate = actualDate;
               }
+            } else {
+              actualDate = this.lastSavedDate;
             }
           })
           return (actualDate.substr(0,10) == this.dateEuFormat(this.formattedDate()).substr(0,10)) ? "oggi " + actualDate : "il " + actualDate
@@ -162,10 +156,8 @@ var app = new Vue(
       },
       filteredMessages: function() {
         let activeChat;
-        this.contacts.forEach((elem) => {
-          if (elem.active == true) {
-            activeChat = elem.messages;
-          }
+        this.contacts.myFunction(function(elem) {
+          activeChat = elem.messages;
         })
         return activeChat;
       }
@@ -202,10 +194,8 @@ var app = new Vue(
         newMessage.status = 'sent';
         newMessage.isHideMenu = false;
         newMessage.date = this.formattedDate();
-        this.filterContacts.forEach((elem) => {
-          if (elem.active == true) {
-            elem.messages.push(newMessage);
-          }
+        this.contacts.myFunction(function(elem) {
+          elem.messages.push(newMessage);
         })
         this.toSend = "";
         this.scrollDown();
@@ -216,10 +206,8 @@ var app = new Vue(
           response.status = 'received';
           response.isHideMenu = false;
           response.date = this.formattedDate();
-          this.filterContacts.forEach((elem) => {
-            if (elem.active == true) {
-              elem.messages.push(response);
-            }
+          this.contacts.myFunction(function(elem) {
+            elem.messages.push(response);
           })
           this.scrollDown();
           this.isWriting = false;
@@ -257,3 +245,11 @@ var app = new Vue(
     }
   }
 );
+
+Array.prototype.myFunction = function(callback) {
+  this.forEach((elem) => {
+    if (elem.active == true) {
+      callback(elem);
+    }
+  })
+}
