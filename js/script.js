@@ -151,7 +151,7 @@ var app = new Vue(
       },
       filterContacts: function() {
         return this.contacts.filter((contact) => {
-          return contact.name.toLowerCase().includes(this.search.trim());
+          return contact.name.toLowerCase().includes(this.search.trim().toLowerCase());
         });
       },
       filteredMessages: function() {
@@ -214,7 +214,7 @@ var app = new Vue(
         }, 2000);
       },
       scrollDown: function() {
-        // Aspetto che il DOM sia completamente caricato
+        // Aspetto che il DOM sia completamente caricato. Si poteva anche usare setTimeout, cosi lui mette in coda l'aggiornamento
         this.$nextTick(function () {
           // chiedere per manipolazione DOM?
           let myDiv = document.getElementById("chat_main");
@@ -230,6 +230,9 @@ var app = new Vue(
         array[index].isHideMenu = !array[index].isHideMenu;
       },
       hideAllMenu: function(array) {
+        if (!array) {
+          return
+        }
         if(event.target.title != "message_menu") {
           array.forEach((message) => {
             message.isHideMenu = false;

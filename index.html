@@ -40,7 +40,7 @@
               <i class="fas fa-search" v-if="search == ''"></i>
               <i class="fas fa-arrow-left" v-else @click="search = ''"></i>
             </button>
-            <input type="text" name="" value="" placeholder="Cerca o inizia una nuova chat" v-model="search">
+            <input type="text" placeholder="Cerca o inizia una nuova chat" v-model="search">
           </div>
           <div id="chat_list">
             <ul>
@@ -62,7 +62,7 @@
             </ul>
           </div>
         </div>
-        <div v-if="noActives == false">
+        <div v-if="noActives == false" class="right main">
           <img id="initial" src="img/initial.png" alt="">
         </div>
         <div v-else class="right main">
@@ -102,7 +102,7 @@
           </div>
           <div id="chat_input">
             <i class="far fa-smile"></i>
-            <input type="text" name="" value="" placeholder="Scrivi un messaggio" @keyup.enter="send()" v-model="toSend">
+            <input type="text" placeholder="Scrivi un messaggio" @keyup.enter="send()" v-model="toSend">
             <i class="fas fa-microphone"></i>
           </div>
         </div>
